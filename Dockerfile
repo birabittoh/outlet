@@ -18,9 +18,8 @@ RUN CGO_ENABLED=0 go build -trimpath -o /dist/outlet
 FROM builder AS run-test-stage
 RUN go test -v ./...
 
-FROM scratch AS build-release-stage
+FROM alpine:3 AS build-release-stage
 
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /dist /app
 
 ENTRYPOINT ["/app/outlet"]
