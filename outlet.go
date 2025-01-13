@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path"
 	"strconv"
 	"time"
 
@@ -64,8 +65,12 @@ func init() {
 		panic("TOKEN not set in .env file")
 	}
 
+	if err := os.MkdirAll("data", os.ModePerm); err != nil {
+		panic(err)
+	}
+
 	var err error
-	db, err = gorm.Open(sqlite.Open("data.sqlite"), &gorm.Config{})
+	db, err = gorm.Open(sqlite.Open(path.Join("data", "data.sqlite")), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
