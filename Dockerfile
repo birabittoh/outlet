@@ -22,4 +22,5 @@ FROM alpine:3 AS build-release-stage
 
 COPY --from=builder /dist /app
 
+WORKDIR /app
 ENTRYPOINT ["/app/outlet"]
